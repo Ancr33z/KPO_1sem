@@ -2,98 +2,82 @@
 
 using namespace std;
 
-bool ifYearLeap(int);
-int daySerialNumber(int, int, int);
-int dayBeforeBirthday(int, int, int, int, int);
-bool check(int, int, int);
+bool isLeapYear(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
 
-typedef struct birthDay
-{
-    int day;
-    int mounth;
-} BIRTH;
+bool isValidDate(int day, int month, int year) {
+    if (month < 1 || month > 12 || day < 1) {
+        return false;
+    }
 
-int main()
-{
+    int daysInMonth[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    if (isLeapYear(year)) {
+        daysInMonth[2] = 29;
+    }
+
+    return day <= daysInMonth[month];
+}
+
+int dayOfYear(int day, int month, int year) {
+    int daysInMonth[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    int dayCount = day;
+    for (int i = 1; i < month; ++i) {
+        dayCount += daysInMonth[i];
+    }
+
+    if (month > 2 && isLeapYear(year)) {
+        dayCount += 1;
+    }
+
+    return dayCount;
+}
+
+int daysUntilBirthday(int currentDay, int birthdayDay, int daysInYear) {
+    if (currentDay <= birthdayDay) {
+        return birthdayDay - currentDay;
+    }
+    else {
+        return daysInYear - (currentDay - birthdayDay);
+    }
+}
+
+int main() {
     setlocale(LC_ALL, "RUS");
+    int day, month, year;
 
-    int date;
-    int iYear, iMonth, iDay, serialNumber, dayBeforeBirthdayNumber;
-    BIRTH birthday;
-    do
-    {
-        cout << "Введите дату в формате ДДММГГГГ\n";
-        cin >> date;
+    do {
+        cout << "Введите день, месяц и год (ДД ММ ГГГГ): ";
+        cin >> day >> month >> year;
 
-        iDay = date / 1000000;
-        iMonth = (date / 10000) % 100;
-        iYear = date % 10000;
+        if (!isValidDate(day, month, year)) {
+            cout << "Некорректная дата. Пожалуйста, введите дату заново." << endl;
+        }
 
-        if (!check(iDay, iMonth, iYear))
-            cout << "Дата введена некорректно повторите ввод" << endl;
-    } while (!check(iDay, iMonth, iYear));
+    } while (!isValidDate(day, month, year));
 
-    do
-    {
-        cout << "Введите вашу дату рождения в формате ДД ММ\n";
-        cin >> birthday.day;
-        cin >> birthday.mounth;
+    bool leapYear = isLeapYear(year);
+    int dayCount = dayOfYear(day, month, year);
 
-        if (birthday.mounth > 12 || birthday.mounth < 1 || birthday.day > 31 || birthday.day < 1)
-            cout << "Дата введена некорректно повторите ввод" << endl;
-    } while (birthday.mounth > 12 || birthday.mounth < 1 || birthday.day > 31 || birthday.day < 1);
-    //------------------------------------------
+    cout << "Год " << (leapYear ? "високосный" : "не високосный") << endl;
+    cout << "Порядковый номер дня в году: " << dayCount << endl;
 
-    serialNumber = daySerialNumber(iDay, iMonth, iYear);
-    dayBeforeBirthdayNumber = dayBeforeBirthday(birthday.day, birthday.mounth, iDay, iMonth, iYear);
+    int birthdayDay, birthdayMonth;
 
-    cout << "Порядковый номер введенного дня: " << serialNumber << endl;
-    cout << "День до вашего дня рождения: " << dayBeforeBirthdayNumber << endl;
-}
+    cout << "Введите день и месяц своего рождения (ДД ММ): ";
+    cin >> birthdayDay >> birthdayMonth;
 
-//--------------------------------------
-bool ifYearLeap(int iYear) // Проверка на високосный год
-{
-    return iYear % 4 == 0 && (iYear % 100 != 0 || iYear % 400 == 0);
-}
-
-int daySerialNumber(int iDay, int iMonth, int iYear)
-{
-    int serialNumber = 0;
-    int daysInMonth[] = { 0, 31, ifYearLeap(iYear) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    for (int i = iMonth; i >= 1; i--)
-    {
-        if (i == iMonth)
-            serialNumber += iDay;
-        else
-            serialNumber += daysInMonth[i];
+    while (!isValidDate(birthdayDay, birthdayMonth, year)) {
+        cout << "Некорректная дата. Пожалуйста, введите день и месяц рождения заново: ";
+        cin >> birthdayDay >> birthdayMonth;
     }
-    return serialNumber;
-}
 
-int dayBeforeBirthday(int day, int mounth, int iDay, int iMonth, int iYear)
-{
-    int dayBeforeBirthdayNumber = 0;
-    int daysInMonth[] = { 0, 31, ifYearLeap(iYear) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    for (int i = iMonth; i != mounth; i = (i % 12) + 1)
-    {
-        if (i == iMonth)
-            dayBeforeBirthdayNumber += daysInMonth[i] - iDay;
-        else
-            dayBeforeBirthdayNumber += daysInMonth[i];
-    }
-    dayBeforeBirthdayNumber += day;
-    return dayBeforeBirthdayNumber;
-}
+    int daysInYear = leapYear ? 366 : 365;
 
-bool check(int day, int month, int year) 
-{ // Добавлены аргументы в функцию check
-    int twelve[]{ 31, ifYearLeap(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    if (day > twelve[month - 1]) {
-        return false;
-    }
-    if (month > 12) {
-        return false;
-    }
-    return true; 
+    int daysUntilNextBirthday = daysUntilBirthday(dayCount, dayOfYear(birthdayDay, birthdayMonth, year), daysInYear);
+    cout << "Дней до ближайшего дня рождения: " << daysUntilNextBirthday << endl;
+
+    return 0;
 }

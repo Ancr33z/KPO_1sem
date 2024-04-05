@@ -1,0 +1,26 @@
+﻿Сборка начата 29.03.2024 18:31:46.
+Уровень детализации журнала: Normal.     1>Проект "D:\education\raboti\Labi\KPO_1sem\lab6\lab6\StaticLib1\StaticLib1.vcxproj" в узле 2 (целевые объекты Build).
+     1>InitializeBuildStatus:
+         Обращение к "x64\Debug\StaticLib1.tlog\unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\HostX64\x64\CL.exe /c /ZI /JMC /nologo /W3 /WX- /diagnostics:column /sdl /Od /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /permissive- /Fo"x64\Debug\\" /Fd"D:\education\raboti\Labi\KPO_1sem\lab6\lab6\x64\Debug\StaticLib1.pdb" /external:W3 /Gd /TP /FC /errorReport:prompt Dictionary.cpp
+         Dictionary.cpp
+     1>D:\education\raboti\Labi\KPO_1sem\lab6\lab6\StaticLib1\Dictionary.cpp(100,24): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+       Lib:
+         C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.37.32822\bin\HostX64\x64\Lib.exe /OUT:"D:\education\raboti\Labi\KPO_1sem\lab6\lab6\x64\Debug\StaticLib1.lib" /NOLOGO /MACHINE:X64 x64\Debug\Dictionary.obj
+         StaticLib1.vcxproj -> D:\education\raboti\Labi\KPO_1sem\lab6\lab6\x64\Debug\StaticLib1.lib
+       FinalizeBuildStatus:
+         Файл "x64\Debug\StaticLib1.tlog\unsuccessfulbuild" удаляется.
+         Обращение к "x64\Debug\StaticLib1.tlog\StaticLib1.lastbuildstate".
+     1>Сборка проекта "D:\education\raboti\Labi\KPO_1sem\lab6\lab6\StaticLib1\StaticLib1.vcxproj" завершена (целевые объекты Build).
+
+Сборка успешно завершена.
+
+       "D:\education\raboti\Labi\KPO_1sem\lab6\lab6\StaticLib1\StaticLib1.vcxproj" (целевой объект Build ) (1) ->
+       (Целевой объект ClCompile) -> 
+         D:\education\raboti\Labi\KPO_1sem\lab6\lab6\StaticLib1\Dictionary.cpp(100,24): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+
+    Предупреждений: 1
+    Ошибок: 0
+
+Прошло времени 00:00:01.07
